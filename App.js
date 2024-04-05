@@ -1,11 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import CameraComponent from './componentes/CameraComponent';
+import DescriptionInput from './componentes/DescriptionInput';
+import RegisterForm from './componentes/RegisterForm';
 
 export default function App() {
+  const [photoUri, setPhotoUri] = useState(null);
+  const [description, setDescription] = useState('');
+
+  const handlePhotoCapture = (uri) => {
+    setPhotoUri(uri);
+  };
+
+  const handleSaveDescription = (text) => {
+    setDescription(text);
+  };
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <CameraComponent onPhotoCapture={handlePhotoCapture} />
+      <DescriptionInput onSaveDescription={handleSaveDescription} />
+      <RegisterForm />
     </View>
   );
 }
