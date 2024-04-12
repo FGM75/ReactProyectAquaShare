@@ -1,35 +1,23 @@
-import React, { useState } from 'react';
-import { View, StyleSheet } from 'react-native';
-import CameraComponent from './componentes/CameraComponent';
-import DescriptionInput from './componentes/DescriptionInput';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { AuthContextProvider } from './componentes/contextos/AuthContextProvider';
+import PantallaInicio from './componentes/contextos/pages/PantallaInicio';
 import RegisterForm from './componentes/RegisterForm';
 
-export default function App() {
-  const [photoUri, setPhotoUri] = useState(null);
-  const [description, setDescription] = useState('');
+const Stack = createStackNavigator();
 
-  const handlePhotoCapture = (uri) => {
-    setPhotoUri(uri);
-  };
-
-  const handleSaveDescription = (text) => {
-    setDescription(text);
-  };
-
+const App = () => {
   return (
-    <View style={styles.container}>
-      <CameraComponent onPhotoCapture={handlePhotoCapture} />
-      <DescriptionInput onSaveDescription={handleSaveDescription} />
-      <RegisterForm />
-    </View>
+    <AuthContextProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Inicio" component={PantallaInicio} />
+          <Stack.Screen name="Registro" component={RegisterForm} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthContextProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
